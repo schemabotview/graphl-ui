@@ -4,14 +4,18 @@
  *   Presentation -> ordered Page[] -> each Page = (sceneId + Slide + overrides)
  *   Scene        -> reusable React Flow graph, referenced by id from many Pages
  */
-import type { Edge, Node, Viewport } from '@xyflow/react'
+import type { Viewport } from '@xyflow/react'
+import type { SceneSpec } from '../scene/types'
 
-/** A reusable React Flow graph. Authored once, referenced by many pages. */
-export interface Scene {
-  id: string
-  title?: string
-  nodes: Node[]
-  edges: Edge[]
+export type { SceneSpec, SceneNodeSpec, SceneEdgeSpec, SceneGrid, NodeKind } from '../scene/types'
+
+/**
+ * A reusable scene: declarative `SceneSpec` data (grid + nodes-with-cells +
+ * edges). The UI resolves cells -> pixel geometry at render time
+ * (`scene/grid.ts`); no positions are stored. Authored once, referenced by many
+ * pages.
+ */
+export type Scene = SceneSpec & {
   /** Default viewport when no page override is supplied. */
   defaultViewport?: Viewport
 }

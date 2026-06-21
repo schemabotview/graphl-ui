@@ -1,0 +1,144 @@
+/* Neon node styling, ported from graphl-mobile. The scene panel gets a dark
+   near-black surface so the glow reads like the reference diagram. */
+.scene-viewer {
+  height: 100%;
+  width: 100%;
+}
+
+.scene-viewer .react-flow,
+.scene-viewer .react-flow__pane,
+.scene-viewer .react-flow__renderer {
+  background: #0a0b12;
+}
+
+.scene-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border: 2px solid var(--node-color, #9aa3b2);
+  border-radius: 14px;
+  background: rgba(16, 18, 28, 0.85);
+  text-align: center;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 18px -6px var(--node-color, #9aa3b2);
+  /* The grid sizes a node's box from its cell, not its text — so clip any label
+     that's still wider/taller than the box (a safety net; prefer widening the
+     cell or shortening the label). */
+  overflow: hidden;
+  animation: scene-node-in 0.4s ease-out both;
+}
+
+@keyframes scene-node-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 'term' nodes are filled chips whose text IS the concept. */
+.scene-node--term {
+  background: color-mix(in srgb, var(--node-color) 22%, #10121c);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* 'container' nodes are titled boxes that group other nodes drawn on top of
+   them. The title pins to the top so the body is free for the children. */
+.scene-node--container {
+  justify-content: flex-start;
+  padding: 10px 12px;
+  border-style: dashed;
+  background: color-mix(in srgb, var(--node-color) 8%, rgba(16, 18, 28, 0.6));
+  box-shadow: none;
+}
+
+/* 'group' nodes are invisible containers — they only sub-arrange their
+   children, contributing no border, fill, label, or shadow of their own. */
+.scene-node--group {
+  border: none;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
+}
+
+.scene-node--container .scene-node__label {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--node-color);
+}
+
+.scene-node__label {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #f4f5f7;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.scene-node--term .scene-node__label {
+  font-size: 13px;
+}
+
+.scene-node__sub {
+  font-size: 11px;
+  color: #9aa3b2;
+}
+
+/* Per-page emphasis (SceneOverrides.highlightNodeIds). */
+.scene-node--highlight {
+  box-shadow: 0 0 28px -2px var(--node-color, #9aa3b2);
+  filter: saturate(1.25) brightness(1.1);
+}
+
+.scene-node--dimmed {
+  opacity: 0.32;
+}
+
+/* 'code' nodes display code snippets as plain monospace text (IDE look). */
+.scene-node--code {
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: #0d1117;
+  border-width: 0 0 0 3px;
+  border-style: solid;
+  border-color: var(--node-color, #9aa3b2);
+  border-radius: 8px;
+  box-shadow: 0 0 14px -4px var(--node-color, #9aa3b2);
+  padding: 10px 14px;
+  gap: 6px;
+}
+
+.scene-node__code {
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, 'Cascadia Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Handles are anchor points only; hide the visible dots. */
+.scene-viewer .scene-handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Edges render in an SVG layer that paints BELOW the nodes layer, so an edge
+   routing under a filled container gets occluded. Scenes are non-interactive,
+   so lift the whole edges layer above the nodes — connections and their flow
+   dots stay visible. */
+.scene-viewer .react-flow__edges {
+  z-index: 3;
+}
