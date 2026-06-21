@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "@xyflow/react/dist/style.css";
 
+/* Drive Tailwind's dark: variant from the .dark class on <html> (app is dark-only). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* App palette (flat near-black, like the reference). */
+  --bg: #0a0a0a;
+  --panel: #0d0d0d;
+  --border: #232323;
+  --accent: #8b5cf6;
+}
+
 html,
 body,
 #root {
@@ -8,9 +19,20 @@ body,
   margin: 0;
 }
 
+body {
+  background: var(--bg);
+  color: #e5e5e5;
+}
+
+/* React Flow canvas matches the flat dark background (no bright grid). */
+.react-flow,
+.react-flow__pane {
+  background: var(--bg);
+}
+
 /* Per-page highlight applied via SceneOverrides.highlightNodeIds */
 .scene-node--highlight {
-  outline: 3px solid #8b5cf6;
+  outline: 3px solid var(--accent);
   outline-offset: 2px;
   border-radius: 6px;
 }

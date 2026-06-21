@@ -6,7 +6,7 @@ export function HomePage() {
 
   return (
     <div className="mx-auto max-w-3xl p-10">
-      <h1 className="mb-2 text-4xl font-bold text-slate-900 dark:text-slate-100">
+      <h1 className="mb-2 text-4xl font-bold text-slate-100">
         graphl-ui
       </h1>
       <p className="mb-8 text-slate-500">Interactive presentations for technical concepts.</p>
@@ -21,12 +21,12 @@ export function HomePage() {
             <li key={p.id}>
               <Link
                 to={`/p/${p.id}`}
-                className="block rounded-lg border border-slate-200 p-4 transition hover:border-violet-400 hover:shadow dark:border-slate-700"
+                className="block rounded-lg border border-[#232323] p-4 transition hover:border-violet-500"
               >
-                <span className="text-xs uppercase tracking-wide text-violet-500">
+                <span className="text-xs uppercase tracking-wide text-violet-400">
                   {p.topic}
                 </span>
-                <span className="block text-lg font-medium text-slate-900 dark:text-slate-100">
+                <span className="block text-lg font-medium text-slate-100">
                   {p.title}
                 </span>
                 <span className="text-sm text-slate-500">{p.pages.length} pages</span>

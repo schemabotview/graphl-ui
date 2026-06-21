@@ -47,11 +47,11 @@ export function PresentationView() {
       <div className="min-h-0 flex-1">
         <PageView page={page} scene={scene} />
       </div>
-      <footer className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-sm dark:border-slate-700">
-        <Link to="/" className="text-violet-500 hover:underline">
+      <footer className="flex items-center justify-between border-t border-[#232323] px-4 py-2 text-sm text-slate-400">
+        <Link to="/" className="text-violet-400 hover:underline">
           ← All presentations
         </Link>
-        <span className="font-medium text-slate-700 dark:text-slate-300">
+        <span className="font-medium text-slate-300">
           {presentation.title}
         </span>
         <div className="flex items-center gap-3">

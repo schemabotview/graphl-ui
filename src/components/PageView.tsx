@@ -15,7 +15,7 @@ interface PageViewProps {
 export function PageView({ page, scene }: PageViewProps) {
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-[3fr_2fr]">
-      <div className="h-full min-h-0 border-b border-slate-200 md:border-b-0 md:border-r dark:border-slate-700">
+      <div className="h-full min-h-0 border-b border-[#232323] md:border-b-0 md:border-r">
         <ReactFlowProvider>
           <SceneViewer scene={scene} overrides={page.overrides} />
         </ReactFlowProvider>
