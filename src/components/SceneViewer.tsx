@@ -3,7 +3,7 @@
  * (highlights, visibility, viewport) without mutating the shared Scene.
  */
 import { useMemo } from 'react'
-import { Background, Controls, ReactFlow, type Edge, type Node } from '@xyflow/react'
+import { Background, ReactFlow, type Edge, type Node } from '@xyflow/react'
 import type { Scene, SceneOverrides } from '../types'
 
 interface SceneViewerProps {
@@ -40,7 +40,6 @@ export function SceneViewer({ scene, overrides }: SceneViewerProps) {
       proOptions={{ hideAttribution: true }}
     >
       <Background />
-      <Controls />
     </ReactFlow>
   )
 }

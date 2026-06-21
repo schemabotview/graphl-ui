@@ -44,7 +44,10 @@ export function PresentationView() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between border-b border-slate-200 px-4 py-2 text-sm dark:border-slate-700">
+      <div className="min-h-0 flex-1">
+        <PageView page={page} scene={scene} />
+      </div>
+      <footer className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-sm dark:border-slate-700">
         <Link to="/" className="text-violet-500 hover:underline">
           ← All presentations
         </Link>
@@ -62,10 +65,7 @@ export function PresentationView() {
             ▶
           </button>
         </div>
-      </header>
-      <div className="min-h-0 flex-1">
-        <PageView page={page} scene={scene} />
-      </div>
+      </footer>
     </div>
   )
 }
