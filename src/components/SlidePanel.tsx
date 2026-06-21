@@ -1,0 +1,43 @@
+/** PowerPoint-style content panel: title, bullets, optional code + narration. */
+import { resolveAsset } from '../content/client'
+import type { Narration, Slide } from '../types'
+
+interface SlidePanelProps {
+  slide: Slide
+  narration?: Narration
+}
+
+export function SlidePanel({ slide, narration }: SlidePanelProps) {
+  return (
+    <div className="flex h-full flex-col gap-6 overflow-y-auto p-8">
+      <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">
+        {slide.title}
+      </h2>
+
+      {slide.bullets && slide.bullets.length > 0 && (
+        <ul className="space-y-3 text-lg text-slate-700 dark:text-slate-300">
+          {slide.bullets.map((b, i) => (
+            <li key={i} className="flex gap-3">
+              <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-violet-500" />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {slide.code && (
+        <pre className="overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100">
+          <code>{slide.code.source}</code>
+        </pre>
+      )}
+
+      {slide.notes && (
+        <p className="text-sm text-slate-500 dark:text-slate-400">{slide.notes}</p>
+      )}
+
+      {narration?.audioSrc && (
+        <audio className="mt-auto w-full" controls src={resolveAsset(narration.audioSrc)} />
+      )}
+    </div>
+  )
+}

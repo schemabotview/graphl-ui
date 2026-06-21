@@ -1,0 +1,20 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HomePage } from './pages/HomePage'
+import { PresentationView } from './pages/PresentationView'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="h-full bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/p/:presentationId" element={<Navigate to="0" replace />} />
+          <Route path="/p/:presentationId/:pageIndex" element={<PresentationView />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
