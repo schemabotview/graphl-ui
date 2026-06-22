@@ -10,9 +10,25 @@
  * `ContentManifest`. Audio paths inside the content are resolved relative to the
  * same base via `resolveAsset`.
  */
-import type { ContentManifest, Presentation, Scene } from '../types'
+import type { ContentManifest, Page, Presentation, Scene } from '../types'
+import { notebookToPages, type NotebookJson, type SectionOverlay } from './notebook'
 
 const BASE = (import.meta.env.VITE_CONTENT_BASE_URL ?? '/content').replace(/\/$/, '')
+
+/**
+ * A presentation as it appears on disk. It is either hand-authored (`pages`) or
+ * notebook-backed (`notebook` + `defaultScene` + `sections`); the loader
+ * normalizes both into a resolved `Presentation` whose `pages` is always set.
+ */
+interface RawPresentation {
+  id: string
+  title: string
+  topic: string
+  pages?: Page[]
+  notebook?: string
+  defaultScene?: string
+  sections?: SectionOverlay[]
+}
 
 /**
  * The on-disk manifest. `scenes` is either a list of scene ids (each loaded from
@@ -21,7 +37,7 @@ const BASE = (import.meta.env.VITE_CONTENT_BASE_URL ?? '/content').replace(/\/$/
  */
 interface RawManifest {
   scenes: string[] | Record<string, Scene>
-  presentations: Presentation[]
+  presentations: RawPresentation[]
 }
 
 /** Resolve a content-relative asset path (e.g. audio) to a full URL. */
@@ -52,5 +68,18 @@ export async function fetchManifest(): Promise<ContentManifest> {
     scenes = raw.scenes
   }
 
-  return { scenes, presentations: raw.presentations }
+  // Normalize each presentation to a resolved one whose `pages` is always set.
+  // Notebook-backed modules are fetched and split into pages here.
+  const presentations: Presentation[] = await Promise.all(
+    raw.presentations.map(async (p): Promise<Presentation> => {
+      if (p.notebook) {
+        const nb = await fetchJson<NotebookJson>(p.notebook)
+        const pages = notebookToPages(nb, p)
+        return { id: p.id, title: p.title, topic: p.topic, pages }
+      }
+      return { id: p.id, title: p.title, topic: p.topic, pages: p.pages ?? [] }
+    }),
+  )
+
+  return { scenes, presentations }
 }
