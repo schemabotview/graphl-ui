@@ -9,7 +9,7 @@ export function HomePage() {
       <h1 className="mb-2 text-4xl font-bold text-slate-100">
         graphl-ui
       </h1>
-      <p className="mb-8 text-slate-500">Interactive presentations for technical concepts.</p>
+      <p className="mb-8 text-slate-500">Pick a module to start. Each is one notebook, split into sections.</p>
 
       {state.status === 'loading' && <p>Loading content…</p>}
       {state.status === 'error' && (
@@ -29,7 +29,7 @@ export function HomePage() {
                 <span className="block text-lg font-medium text-slate-100">
                   {p.title}
                 </span>
-                <span className="text-sm text-slate-500">{p.pages.length} pages</span>
+                <span className="text-sm text-slate-500">{p.pages.length} sections</span>
               </Link>
             </li>
           ))}
