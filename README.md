@@ -8,10 +8,20 @@ Python, ML, …). Content lives in separate repos (e.g.
 Each page is split into two parts:
 
 - **Scene** — an interactive React Flow canvas (left)
-- **Slide** — a PowerPoint-style key-points panel (right)
+- **Slide** — a content panel (right): either Markdown prose + tables + code
+  (syntax-highlighted via highlight.js), or a key-points shorthand.
 
 A scene is authored once and reused across many pages, each pairing it with a
 different slide and optional per-page overrides (highlights / viewport).
+
+Presentations can be **notebook-backed**: the UI fetches a Jupyter `.ipynb` from
+the content repo, splits it at each `##` heading into one page per section, and a
+manifest overlay wires each section to a scene + highlights + audio. See the
+content repo's README for the schema.
+
+Navigation: the home page is the module catalog; inside a module a footer
+**breadcrumb** (`Concepts › Topic › Module › Section`) opens a dropup of siblings
+at each level. Pages are deep-linkable (`/p/:module/:sectionIndex`).
 
 ## Run it
 
