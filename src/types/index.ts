@@ -43,6 +43,13 @@ export interface Narration {
 /** PowerPoint-style content panel for a single page. */
 export interface Slide {
   title: string
+  /**
+   * Optional full-content body in Markdown (GFM). When present it is rendered
+   * as prose — paragraphs, tables, ASCII diagrams, and fenced code blocks
+   * (syntax-highlighted via highlight.js) — and takes precedence over the
+   * `bullets` / `code` shorthand below. Used for faithful notebook slides.
+   */
+  body?: string
   /** Key talking points. */
   bullets?: string[]
   /** Optional code snippet shown on the slide. */

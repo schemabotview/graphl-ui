@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@xyflow/react/dist/style.css";
+@plugin "@tailwindcss/typography";
 
 /* Drive Tailwind's dark: variant from the .dark class on <html> (app is dark-only). */
 @custom-variant dark (&:where(.dark, .dark *));
